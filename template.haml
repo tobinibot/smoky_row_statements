@@ -179,5 +179,11 @@
                 %td{colspan: 2, style: 'padding: 4px; text-align: right;'}
                   %strong= ActiveSupport::NumberHelper.number_to_currency(donations.sum(&:amount))
 
-    %footer{style: 'position:absolute; bottom:0'}
-      No goods or services were provided, blah blah blah.
+    %footer{style: 'position: absolute; bottom: 0'}
+      %p
+        Thank you for your generous giving!<br/>
+        No goods or services were provided in exchange for tax-deductible contributions.
+      %p
+        %strong Smoky Row Brethren Church<br/>
+        7260 Smoky Row Rd<br/>
+        Columbus OH 43235
