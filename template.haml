@@ -126,7 +126,7 @@
               %th Account
               %th Method
               %th Amount
-              %th Tax Deductible
+              %th Tax-Deductible
           %tbody
             - donations.each_with_index do |donation, i|
               - has_memo = ! donation.memo.blank?
@@ -152,7 +152,7 @@
 
             - unless td_accounts.empty?
               %tr
-                %td.sub-header{colspan: 2} TAX DEDUCTIBLE
+                %td.sub-header{colspan: 2} TAX-DEDUCTIBLE
               - td_accounts.each do |acct|
                 %tr
                   %td{style: 'padding: 4px;'}= acct
@@ -163,7 +163,7 @@
 
             - unless ntd_accounts.empty?
               %tr
-                %td.sub-header{colspan: 2} NON TAX DEDUCTIBLE
+                %td.sub-header{colspan: 2} NON TAX-DEDUCTIBLE
               - ntd_accounts.each do |acct|
                 %tr
                   %td{style: 'padding: 4px;'}= acct
