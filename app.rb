@@ -4,9 +4,16 @@ require 'active_record'
 require 'pdfkit'
 require 'haml'
 
-CHROME_PATH = '~/Downloads/chrome-mac/Chromium.app/Contents/MacOS/Chromium'
+# CHROME_PATH = '~/Downloads/chrome-mac/Chromium.app/Contents/MacOS/Chromium'
+CHROME_PATH = '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 
-GENERATE_PDF_COMMAND = "#{CHROME_PATH} --headless --print-to-pdf-no-header --print-to-pdf=pdfs/{name}.pdf {name}.html"
+GENERATE_PDF_COMMAND = "#{CHROME_PATH} --headless --print-to-pdf-no-header --print-to-pdf=pdfs/XXX.pdf XXX.html"
+
+DONOR_NAMES_TO_IGNORE = [
+  'Anonymous Giving', 'BWC', 'Spirit of Love Ministries',
+  'Church of Pentecost USA Inc', 'Kroger Giving', 'Wesbanco',
+  'Help My Neighbor Inc', 'WMO Class Settlement', 'Franklin County Ohio'
+].freeze
 
 # ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.default_timezone = :local
@@ -34,7 +41,15 @@ end
 FileUtils.mkdir_p('pdfs')
 FileUtils.rm(Dir.glob('pdfs/*.pdf'))
 
+# Donation.all.each do |d|
+#   if !DONOR_NAMES_TO_IGNORE.include?(d.donor_full_name) && Donor.where(full_name: d.donor_full_name).count != 1
+#     puts "Missing a donor row for #{d.donor_full_name}"
+#   end
+# end
+# exit(0)
+
 Donor.all.each do |donor|
+  # puts donor.full_name
   donations = Donation.where(donor_full_name: donor.full_name).order(:date)
 
   next if donations.empty?
@@ -49,13 +64,10 @@ Donor.all.each do |donor|
                          td_accounts: td_accounts,
                          ntd_accounts: ntd_accounts)
 
-  safe_donor_name = donor.full_name.gsub(/\s+/, '')
+  safe_donor_name = donor.full_name.gsub(/\s+/, '_').gsub(/&/, 'and')
   html_file_name = "#{safe_donor_name}.html"
 
   File.write(html_file_name, html)
-  system(GENERATE_PDF_COMMAND.gsub(/\{name\}/, safe_donor_name))
+  system(GENERATE_PDF_COMMAND.gsub(/XXX/, safe_donor_name))
   FileUtils.rm(html_file_name)
 end
-
-# system('./generate.sh')
-# system('open TobinJuday_chrome.pdf')

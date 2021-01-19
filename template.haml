@@ -42,7 +42,7 @@
         width: 100%;
         border-spacing: 0;
         border-collapse: collapse;
-        border: 1px solid #333;
+        border: 1px solid #999;
       }
 
       .donations table thead th, table tbody td {
@@ -87,10 +87,12 @@
         border-spacing: 0;
         border-collapse: collapse;
         font-size: 0.8em;
+        border: 1px solid #999;
       }
 
       .summary td {
-        border: none;
+        border-top: none;
+        border-bottom: none;
       }
 
       .summary td.header {
@@ -110,12 +112,15 @@
   %body
     %h1 Smoky Row Brethren Church | Giving Statement
     %h4
-      Jan 1 2020 – Dec 31 2020
+      Jan 1 2020 &ndash; Dec 31 2020
       %span.normal-text{style: 'font-weight 400;'} (as of Jan 18 2021)
 
     .donor
       %h2= donor.full_name
-      %div= donor.address.gsub(/\n/, '<br/>')
+      %div= donor.address1
+      - unless donor.address1.blank?
+        %div= donor.address2
+      %div #{donor.city} #{donor.state} #{donor.zip}
 
     .grid-wrapper
       .donations
@@ -175,9 +180,8 @@
             %tr
               %td.sub-header{colspan: 2} TOTAL AMOUNT
             %tr
-              %td
-                %td{colspan: 2, style: 'padding: 4px; text-align: right;'}
-                  %strong= ActiveSupport::NumberHelper.number_to_currency(donations.sum(&:amount))
+              %td{colspan: 2, style: 'padding: 4px; text-align: right;'}
+                %strong= ActiveSupport::NumberHelper.number_to_currency(donations.sum(&:amount))
 
     %footer{style: 'position: absolute; bottom: 0'}
       %p
