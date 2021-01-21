@@ -1,5 +1,8 @@
-pdfs/
 /.idea/dataSources.xml
 
 # make sure the temporary HTML files don’t get commited
 *.html
+
+# keep any generated statements out
+pdfs/
+statements.zip
