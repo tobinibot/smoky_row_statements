@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 require 'active_record'
-require 'pdfkit'
 require 'haml'
+require 'zip'
+
+require_relative 'zip_file_generator'
 
 # CHROME_PATH = '~/Downloads/chrome-mac/Chromium.app/Contents/MacOS/Chromium'
 CHROME_PATH = '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
@@ -49,7 +51,6 @@ FileUtils.rm(Dir.glob('pdfs/*.pdf'))
 # exit(0)
 
 Donor.all.each do |donor|
-  # puts donor.full_name
   donations = Donation.where(donor_full_name: donor.full_name).order(:date)
 
   next if donations.empty?
@@ -71,3 +72,7 @@ Donor.all.each do |donor|
   system(GENERATE_PDF_COMMAND.gsub(/XXX/, safe_donor_name))
   FileUtils.rm(html_file_name)
 end
+
+# create a zip file
+zf = ZipFileGenerator.new('pdfs', 'statements.zip')
+zf.write

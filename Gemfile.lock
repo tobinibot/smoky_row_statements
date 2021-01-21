@@ -20,7 +20,7 @@ GEM
       concurrent-ruby (~> 1.0)
     minitest (5.14.1)
     mysql2 (0.5.3)
-    pdfkit (0.8.4.3.2)
+    rubyzip (2.3.0)
     temple (0.8.2)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -36,7 +36,7 @@ DEPENDENCIES
   activesupport
   haml
   mysql2
-  pdfkit
+  rubyzip
 
 BUNDLED WITH
    2.1.2
