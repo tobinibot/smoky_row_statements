@@ -1,2 +1,5 @@
 pdfs/
 /.idea/dataSources.xml
+
+# make sure the temporary HTML files don’t get commited
+*.html
