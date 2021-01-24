@@ -55,6 +55,8 @@ Donor.all.each do |donor|
 
   next if donations.empty?
 
+  puts donor.full_name
+
   td_accounts = donations.filter(&:tax_deductible).map(&:account).uniq
   ntd_accounts = donations.filter { |d| !d.tax_deductible }.map(&:account).uniq
 

@@ -6,3 +6,4 @@
 # keep any generated statements out
 pdfs/
 statements.zip
+.DS_Store
