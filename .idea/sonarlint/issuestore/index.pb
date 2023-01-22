@@ -3,3 +3,10 @@ E
 zip_file_generator.rb,e/4/e4034702214c61ef22c79da65f78fbd258d80053
 H
 raw_data/2022_giving.csv,2/d/2d7884c2d04009a1dc527164527f0761cc86e5db
+<
+Gemfile.lock,2/1/21fb5836b499a2be648386aac055d2e069160d6c
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+7
+Gemfile,d/e/de3150c01c3a946a6168173c4116741379fe3579
