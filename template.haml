@@ -3,7 +3,7 @@
   %head
     %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
 
-    %link{href: 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap', rel: :stylesheet}
+    -# %link{href: 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap', rel: :stylesheet}
 
     :css
       body {
@@ -16,7 +16,7 @@
         margin-bottom: 0;
       }
 
-      h2 {
+      h2, h3 {
         margin-bottom: 0;
       }
 
@@ -34,7 +34,7 @@
 
       .grid-wrapper {
         display: grid;
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 3fr 1.1fr;
         column-gap: 10px;
       }
 
@@ -112,17 +112,17 @@
   %body
     %h1 Smoky Row Brethren Church | Giving Statement
     %h4
-      Jan 1 2020 &ndash; Dec 31 2020
-      %span.normal-text{style: 'font-weight 400;'} (as of #{Date.today.strftime('%b %e %Y')})
+      Jan 1 2022 &ndash; Dec 31 2022
+      %span.normal-text{style: 'font-weight 400;'}
 
     .donor
-      %h2= donor.full_name
+      %h2= donor.name
       %div= donor.address1
       - unless donor.address1.blank?
         %div= donor.address2
       %div #{donor.city} #{donor.state} #{donor.zip}
 
-    .grid-wrapper
+    .grid-wrapper{style: 'margin-bottom: 50px;'}
       .donations
         %table
           %thead
@@ -136,18 +136,17 @@
             - donations.each_with_index do |donation, i|
               - has_memo = ! donation.memo.blank?
               %tr{class: (has_memo ? 'has-memo ' : '') + (i % 2 == 0 ? 'shaded' : '') }
-                %td
+                %td{style: 'white-space: nowrap;'}
                   %strong= donation.date.strftime('%b %e, %Y')
                 %td= donation.account
                 %td= donation.method
                 %td= ActiveSupport::NumberHelper.number_to_currency(donation.amount)
-                %td= donation.tax_deductible ? 'X' : ''
+                %td= donation.tax_deductible ? '✓' : ''
               - if has_memo
                 %tr{class: i % 2 == 0 ? 'shaded' : ''}
                   %td
-                  %td{colspan: 3}
+                  %td{colspan: 4}
                     .memo Memo: #{donation.memo}
-                  %td
 
       .summary
         %table
@@ -183,11 +182,10 @@
               %td{colspan: 2, style: 'padding: 4px; text-align: right;'}
                 %strong= ActiveSupport::NumberHelper.number_to_currency(donations.sum(&:amount))
 
-    %footer{style: 'position: absolute; bottom: 0'}
-      %p
-        Thank you for your generous giving!<br/>
-        No goods or services were provided in exchange for tax-deductible contributions.
-      %p
-        %strong Smoky Row Brethren Church<br/>
-        7260 Smoky Row Rd<br/>
-        Columbus OH 43235
+        %p
+          Thank you for your generous giving! No goods or services were provided in exchange for
+          tax-deductible contributions.
+        %p
+          %strong Smoky Row Brethren Church<br/>
+          7260 Smoky Row Rd<br/>
+          Columbus OH 43235
